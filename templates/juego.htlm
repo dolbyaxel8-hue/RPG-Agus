@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RPG Agus</title>
+</head>
+
+<body>
+
+<h1>⚔️ RPG Agus ⚔️</h1>
+
+<h2>{{ jugador.nombre }}</h2>
+
+<p>❤️ Vida: {{ jugador.vida }}/{{ jugador.vida_maxima }}</p>
+
+<p>⚔️ Daño: {{ jugador.daño }}</p>
+
+<p>💰 Oro: {{ jugador.oro }}</p>
+
+<hr>
+
+<h2>🐺 Enemigo</h2>
+
+<p>{{ enemigo.nombre }}</p>
+
+<p>❤️ Vida: {{ enemigo.vida }}</p>
+
+
+<form action="/atacar" method="post">
+<button>⚔️ Atacar</button>
+</form>
+
+
+<form action="/curar" method="post">
+<button>🧪 Curar</button>
+</form>
+
+
+</body>
+</html>
