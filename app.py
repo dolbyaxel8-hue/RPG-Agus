@@ -111,25 +111,58 @@ def inicio():
 def atacar():
 
     global mensaje
+    global historial
+
 
     if enemigo.vida > 0:
 
+        vida_antes = enemigo.vida
+
         jugador.atacar(enemigo)
 
-        mensaje = f"⚔️ Has atacado al {enemigo.nombre}"
+
+        daño = vida_antes - enemigo.vida
+
+
+        historial.append(
+            f"⚔️ {jugador.nombre} hace {daño} de daño a {enemigo.nombre}"
+        )
+
+
+        if enemigo.vida <= 0:
+
+            enemigo.vida = 0
+
+            historial.append(
+                f"🏆 Has derrotado al {enemigo.nombre}"
+            )
+
+
+        else:
+
+            daño_recibido = 10
+
+            historial.append(
+                f"🐺 {enemigo.nombre} contraataca"
+            )
+
+
+        mensaje = "⚔️ Combate realizado"
+
 
     else:
 
         mensaje = "🏆 El enemigo ya está derrotado"
 
 
+
     return render_template(
         "juego.html",
         jugador=jugador,
         enemigo=enemigo,
-        mensaje=mensaje
+        mensaje=mensaje,
+        historial=historial
     )
-
 
 
 @app.route("/curar", methods=["POST"])
@@ -179,6 +212,7 @@ def nuevo():
 
 
     mensaje = f"🐺 Aparece un {enemigo.nombre}"
+    historial = []
 
 
     return render_template(
