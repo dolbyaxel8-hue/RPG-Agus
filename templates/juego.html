@@ -2,42 +2,99 @@
 <html>
 
 <head>
+
 <title>RPG Agus</title>
+
 </head>
 
+
 <body>
+
 
 <h1>⚔️ RPG Agus ⚔️</h1>
 
 
-<h2>🧝 {{jugador.nombre}}</h2>
+<h2>{{ jugador.nombre }}</h2>
 
-<p>❤️ Vida: {{jugador.vida}} / {{jugador.vida_maxima}}</p>
 
-<p>⚔️ Daño: {{jugador.daño}}</p>
+<p>
+❤️ Vida:
+{{ jugador.vida }}/{{ jugador.vida_maxima }}
+</p>
 
-<p>💰 Oro: {{jugador.oro}}</p>
+
+<p>
+⚔️ Daño:
+{{ jugador.daño }}
+</p>
+
+
+<p>
+🧪 Pociones:
+{{ jugador.pociones }}
+</p>
+
+
+<p>
+💰 Oro:
+{{ jugador.oro }}
+</p>
 
 
 <hr>
 
 
-<h2>🐺 {{enemigo.nombre}}</h2>
+<h2>🐺 Enemigo</h2>
 
-<p>❤️ Vida: {{enemigo.vida}}</p>
+
+<h3>
+{{ enemigo.nombre }}
+</h3>
+
+
+<p>
+❤️ Vida:
+{{ enemigo.vida }}
+</p>
+
+
+<hr>
+
+
+<h3>
+{{ mensaje }}
+</h3>
+
 
 
 <form action="/atacar" method="post">
-<button>⚔️ Atacar</button>
+
+<button>
+⚔️ Atacar
+</button>
+
 </form>
+
 
 
 <form action="/curar" method="post">
-<button>🧪 Curar</button>
+
+<button>
+🧪 Curar
+</button>
+
 </form>
 
 
-<h3>{{mensaje}}</h3>
+
+<form action="/nuevo" method="post">
+
+<button>
+🐺 Buscar enemigo
+</button>
+
+</form>
+
 
 
 </body>
