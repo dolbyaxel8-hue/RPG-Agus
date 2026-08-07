@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Tienda</title>
+
+<style>
+
+body{
+    background:#111;
+    color:white;
+    font-family:Arial;
+    text-align:center;
+}
+
+h1{
+    font-size:40px;
+}
+
+h2{
+    color:gold;
+}
+
+.caja{
+    width:500px;
+    margin:auto;
+    padding:20px;
+    border:2px solid white;
+    border-radius:15px;
+}
+
+.objeto{
+    margin:15px;
+}
+
+button{
+    padding:10px 20px;
+    font-size:18px;
+    cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🏪 {{ tienda.nombre }}</h1>
+
+<h2>💰 Oro: {{ jugador.oro }}</h2>
+
+<div class="caja">
+
+{% for nombre in tienda.inventario %}
+
+<div class="objeto">
+
+{% if nombre == "pociones" %}
+
+<p>
+🧪 Poción — 30 oro
+</p>
+
+<form action="/comprar/pociones" method="get">
+
+<button>
+Comprar
+</button>
+
+</form>
+
+{% else %}
+
+<p>
+
+{{ items[nombre].nombre }}
+
+—
+
+{{ items[nombre].precio }} oro
+
+</p>
+
+<form action="/comprar/{{ nombre }}" method="get">
+
+<button>
+Comprar
+</button>
+
+</form>
+
+{% endif %}
+
+</div>
+
+<hr>
+
+{% endfor %}
+
+</div>
+
+<br>
+
+<form action="/salir_tienda">
+    <button>🚪 Salir de la tienda</button>
+</form>
+</body>
+
+</html>

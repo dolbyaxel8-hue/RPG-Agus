@@ -1,24 +1,9 @@
 from personaje import Personajes, efectos
 import random
 import time
-from objetos import espada_madera, espada_hierro, espada_diamante,lupa,armadura_bronce,armadura_hierro,armadura_diamante,escama_ouroboros
-espada_hierro1 = espada_hierro("espada de hierro", 25,2,0)
-espada_madera1 = espada_madera("espada de madera",15,1,0)
-espada_diamante1 = espada_diamante("espada de diamante",40,3,0)
-armadura_bronce1 = armadura_bronce("armadura de bronce",15,0.1,0)
-armadura_hierro1 = armadura_hierro("armadura de hierro",25,0.2,0)
-armadura_diamante1 = armadura_diamante("armadura de diamanate",40,0.3,0)
-escama_ouroboros1 = escama_ouroboros("escama de ouroboros",150,50,0)
-lupa1 = lupa("lupa",30,0,0)
-items = {"espada de madera": espada_madera1, "espada de hierro": espada_hierro1, "espada de diamante": espada_diamante1, "armadura de bronce": armadura_bronce1, "armadura de hierro": armadura_hierro1, "armadura de diamante": armadura_diamante1, "escama de ouroboros": escama_ouroboros1}
+from objetos import espada_madera1, espada_hierro1, espada_diamante1,lupa1,armadura_bronce1,armadura_hierro1,armadura_diamante1,escama_ouroboros1,items
 
-def a():
-    time.sleep(1)
-def nuevo_nivel():
-     print("╔══════════════════════╗")
-     print("║   ⭐NUEVO NIVEL⭐    ║")
-     print("╚══════════════════════╝")
-     time.sleep(1)
+
 def daño_hecho(a,b,c):
     return(a*(b+b*c))
 def daño_recibido(d,e,f,g):
@@ -36,15 +21,29 @@ class Jugador(Personajes):
         self.esquive2 = esquive2
         self.Ouroboros_encontrado = Ouroboros_encontrado
         self.efectos = efectos
-    def ataque_esp():
+        self.registro = []
+        self.lupa = False
+    def mensaje(self,texto):
+        self.registro.append(texto)
+    def ataque_esp(self):
         pass
     def esquive():
         pass
     def recibir_daño():
         pass
     def hacer_daño(self,enemigo,cantidad):
-        enemigo.vida -= cantidad
-        print("has hecho", cantidad, "de daño")
+
+     enemigo.vida -= cantidad
+
+     if cantidad <= 0:
+
+         self.registro.append(
+            "❌ Has fallado el ataque")
+
+     else:
+
+         self.registro.append(
+            f"⚔️ Has hecho {cantidad} de daño")
     def combate(self,enemigo):
         if self.piso >= 6:
             print("╔════════════════════════════════════════════════╗")
@@ -80,101 +79,137 @@ class Jugador(Personajes):
              print("escribe un numero")
     def status(self,enemigo):
         if self.efectos.envenenado > 0:
-            print("el veneno te quita vida", self.efectos.envenenado, "turnos restantes")
+            self.registro.append(
+    f"☠️ El veneno te hace daño ({self.efectos.envenenado} turnos restantes)")
             if self.vida <= 5:
              self.vida = 1
              self.efectos.envenenado -= 1
-             time.sleep(1)
             else:
              self.vida -= 5
              self.efectos.envenenado -= 1
-             time.sleep(1)
         if self.efectos.quemado > 0:
-            print("el fuego te quita vida", self.efectos.quemado, "turnos restantes")
+            self.registro.append(
+    f"🔥 La quemadura sigue activa ({self.efectos.quemado} turnos restantes)")
             if self.vida <= 10:
                 self.vida = 1
                 self.efectos.quemado -= 1
-                a()
             else:
                 self.vida -= 10
                 self.efectos.quemado -=1
-                a()
         if self.efectos.congelado > 0:
-            print("el hielo te quita vida", self.efectos.congelado, "turnos restantes")
+            self.registro.append(
+    f"❄️ El hielo sigue activo ({self.efectos.congelado} turnos restantes)")
             if self.vida <= 10:
                 self.vida = 1
                 self.efectos.congelado -= 1
-                a()
             else:
                 self.vida -= 10
                 self.efectos.congelado -=1
-                a()
         if self.efectos.atrapado >0:
-            print("estas atrapado, la araña te golpea ")
+            self.registro.append(
+    "🕸️ Estás atrapado por la telaraña")
             d = float(random.choice(["1","1","1","1","1","1","1","1","1","0"]))
             f = float(random.choice(["0","0","0","0","0","0","0","0","0","0.5"]))
             e = float(enemigo.daño)
             g = float(self.defensa)
             if d == 0:
-             print(enemigo.nombre, "ha fallado su ataque")
+             self.registro.append(
+    f"❌ {enemigo.nombre} ha fallado su ataque")
             if f == 0.5:
-             print(enemigo.nombre, "ha hecho un golpe critico")
+             self.registro.append(
+    f"💥 {enemigo.nombre} ha hecho un golpe crítico")
             enemigo.recibir_daño(self,round(daño_recibido(d,f,e,g), 1))
             enemigo.ataque_esp(self)
-            time.sleep(1)
             self.efectos.atrapado -=1 
         if self.efectos.envenenado_F > 0:
-            print("el veneno profundo te quita vida", self.efectos.envenenado_F, "turnos restantes")
+            self.registro.append(
+    f"☠️ Veneno profundo activo ({self.efectos.envenenado_F} turnos restantes)")
             if self.vida <= 5:
              self.vida = 1
              self.efectos.envenenado_F -= 1
-             a()
             else:
              self.vida -= 5
              self.efectos.envenenado_F -= 1
-             a()
     def atacar(self,enemigo):
-        self.status(enemigo)
-        print("decides atacar al", enemigo.nombre)
-        time.sleep(1)
-        enemigo.esquive(self)
-        if lupa1.comprado >0:
-           a = 1
-        else:
-           if self.esquive1 >0:
-               a = float(random.choice(["1","1","1","1","0"]))
-               self.esquive1 -= 1
-           if self.esquive2 >0:
-               a = float(random.choice(["1","0","0"]))
-               self.esquive2 -=1
+           self.status(enemigo)
+
+           self.registro.append(
+           f"⚔️ Atacas a {enemigo.nombre}"
+)
+           enemigo.esquive(self)
+
+           if self.lupa:
+
+            a = 1
+
            else:
-               a = float(random.choice(["1","1","1","1","1","1","1","1","1","0"]))
-        b = float(self.daño)
-        c = float(random.choice(["0","0","0","0","0","0","0","0","0","0.5"]))
-        if a == 0:
-            print(self.nombre, "ha fallado el ataque")
-        if c == 0.5:
-            print(self.nombre, "ha hecho un golpe critico")
-        self.hacer_daño(enemigo,round(daño_hecho(a,b,c), 1))
-        time.sleep(1)
-        if enemigo.vida > 0:
-            d = int((random.choice(["1","1","1","1","1","1","1","1","1","0"])))
+
+                if self.esquive1 > 0:
+
+                 a = float(random.choice(["1","1","1","1","0"]))
+                 self.esquive1 -= 1
+
+                elif self.esquive2 > 0:
+
+                 a = float(random.choice(["1","0","0"]))
+                 self.esquive2 -= 1
+
+                else:
+
+                 a = float(random.choice(["1","1","1","1","1","1","1","1","1","0"]))
+
+           b = float(self.daño)
+
+           c = float(random.choice(["0","0","0","0","0","0","0","0","0","0.5"]))
+
+           if a == 0:
+
+            self.registro.append(
+        f"❌ {self.nombre} ha fallado el ataque")
+
+           if c == 0.5:
+
+            self.registro.append(
+        f"💥 {self.nombre} ha hecho un golpe crítico")
+
+           self.hacer_daño(enemigo, round(daño_hecho(a, b, c), 1))
+
+           if enemigo.vida > 0:
+
+            d = int(random.choice(["1","1","1","1","1","1","1","1","1","0"]))
+
             f = float(random.choice(["0","0","0","0","0","0","0","0","0","0.5"]))
+
             e = float(enemigo.daño)
+
             g = float(self.defensa)
+
             if d == 0:
-             print(enemigo.nombre, "ha fallado su ataque")
+
+             self.registro.append(
+            f"❌ {enemigo.nombre} ha fallado su ataque")
+
             if f == 0.5:
-             print(enemigo.nombre, "ha hecho un golpe critico")
-            enemigo.recibir_daño(self,round(daño_recibido(d,e,f,g), 1))
+
+             self.registro.append(
+            f"💥 {enemigo.nombre} ha hecho un golpe crítico")
+
+            enemigo.recibir_daño(self, round(daño_recibido(d, e, f, g), 1))
+
             if d > 0:
-                enemigo.ataque_esp(self)
-            time.sleep(1)
-        if enemigo.vida <= 0:
-           print("has derrotado al", enemigo.nombre, "la recompensa es", enemigo.oro, "de oro y", enemigo.experiencia, "puntos de experiencia")
-           time.sleep(1)
-           self.oro += enemigo.oro
-           self.experiencia += enemigo.experiencia
+
+             enemigo.ataque_esp(self)
+           if enemigo.vida <= 0:
+            enemigo.vida = 0
+            self.registro.append(
+            f"🏆 Has derrotado al {enemigo.nombre}")
+            self.registro.append(
+            f"💰 +{enemigo.oro} oro")
+            self.registro.append(
+            f"✨ +{enemigo.experiencia} experiencia")
+            self.oro += enemigo.oro
+            self.experiencia += enemigo.experiencia
+            self.check_level()
     def curar(self):
        if self.pociones <= 0:
           print("no tienes pociones")
@@ -243,90 +278,58 @@ class Jugador(Personajes):
               print("no existe el objeto")
         else:
            print("decides no comprar")
-           time.sleep(1)
            break
     def check_level(self):
-        if self.nivel == 1 and self.experiencia >= 50:
-          nuevo_nivel()
-          print("has subido al nivel 2, vida maxima aumentada y 20 de vida ganados")
-          self.daño += 0.5
-          self.vida_maxima +=5
-          self.nivel = 2
-          self.vida += 20
-          time.sleep(1)
-        if self.nivel == 2 and self.experiencia >= 180:
-                  nuevo_nivel()
-                  print("has subido al nivel 3, vida maxima aumentada y 20 de vida ganados")
-                  self.daño += 0.5
-                  self.vida_maxima +=5
-                  self.nivel = 3
-                  self.vida += 20
-                  time.sleep(1)
-        if self.nivel == 3 and self.experiencia >= 260:
-                  nuevo_nivel()
-                  print("has subido al nivel 4, vida maxima aumentada y 20 de vida ganados")
-                  self.daño += 0.5
-                  self.vida_maxima +=5
-                  self.nivel = 4
-                  self.vida += 20
-                  time.sleep(1)
-        if self.nivel == 4 and self.experiencia >= 350:
-                  nuevo_nivel()
-                  print("has subido al nivel 5, vida maxima aumentada y 20 de vida ganados")
-                  self.daño += 0.5
-                  self.vida_maxima +=5
-                  self.nivel = 5
-                  self.vida += 20
-                  time.sleep(1)
-        if self.nivel == 5 and self.experiencia >= 450:
-                  nuevo_nivel()
-                  print("has subido al nivel 6, vida maxima aumentada y 20 de vida ganados")
-                  self.daño += 0.5
-                  self.vida_maxima +=5
-                  self.nivel = 6
-                  self.vida += 20
-                  time.sleep(1)
-        if self.nivel == 6 and self.experiencia >= 560:
-                  nuevo_nivel()
-                  print("has subido al nivel 7, vida maxima aumentada y 20 de vida ganados")
-                  self.daño += 0.5
-                  self.vida_maxima +=5
-                  self.nivel = 7
-                  self.vida += 20
-                  time.sleep(1)
-        if self.nivel == 7 and self.experiencia >= 680:
-                  nuevo_nivel()
-                  print("has subido al nivel 8, vida maxima aumentada y 20 de vidas ganados")
-                  self.daño += 0.5
-                  self.vida_maxima +=5
-                  self.nivel = 8
-                  self.vida += 20
-                  time.sleep(1)
-        if self.nivel == 8 and self.experiencia >= 810:
-                  nuevo_nivel()
-                  print("has subido al nivel 9, vida maxima aumentada y 20 de vida ganados")
-                  self.daño += 0.5
-                  self.vida_maxima +=5
-                  self.nivel = 9
-                  self.vida += 20
-                  time.sleep(1)
-        if self.nivel == 9 and self.experiencia >= 950:
-                  nuevo_nivel()
-                  print("has subido al nivel 10, vida maxima aumentada y 20 de vida ganados")
-                  self.daño += 0.5
-                  self.vida_maxima +=5
-                  self.nivel = 10
-                  self.vida += 20
-                  time.sleep(1)
-        if self.nivel == 10 and self.experiencia >= 1100:
-                  nuevo_nivel()
-                  print("vida maxima aumentada y 20 de vida ganados")
-                  print("🏆 NIVEL MÁXIMO ALCANZADO 🏆")
-                  self.daño += 0.5
-                  self.vida_maxima +=5
-                  self.vida += 20
-                  self.nivel = 11
-                  time.sleep(1)
+
+     niveles = {
+        1: 50,
+        2: 180,
+        3: 260,
+        4: 350,
+        5: 450,
+        6: 560,
+        7: 680,
+        8: 810,
+        9: 950,
+        10: 1100
+    }
+
+
+     while self.nivel in niveles and self.experiencia >= niveles[self.nivel]:
+
+        self.nivel += 1
+
+        self.daño += 1
+
+        self.vida_maxima += 5
+
+        self.vida += 20
+
+        if self.vida > self.vida_maxima:
+            self.vida = self.vida_maxima
+
+
+        self.registro.append(
+            f"⭐ Has subido al nivel {self.nivel}"
+        )
+
+        self.registro.append(
+            "⚔️ +1 daño"
+        )
+
+        self.registro.append(
+            "❤️ +5 vida máxima"
+        )
+
+        self.registro.append(
+            "🧪 Recuperas 20 de vida"
+        )
+
+
+     if self.nivel >= 10:
+
+        self.nivel = 10
+                  
     def mostrar_I(self):
         print("╔══════════════════════╗")
         print("║      INVENTARIO      ║")

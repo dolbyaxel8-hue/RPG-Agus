@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Introducción</title>
+
+<style>
+
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: white;
+}
+
+
+h1 {
+    font-size: 40px;
+}
+
+
+pre {
+    font-family: "Courier New", monospace;
+    font-size: 22px;
+    display: inline-block;
+    text-align: left;
+    line-height: 1;
+}
+
+
+#intro {
+    font-size: 22px;
+    margin-top: 30px;
+}
+
+
+button {
+
+    font-size: 20px;
+    padding: 10px 25px;
+    cursor: pointer;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>⚔️ RPG PARA AGUS ⚔️</h1>
+
+
+<hr>
+
+
+<pre>
+╔════════════════════════════╗
+║                            ║
+║        RPG PARA AGUS       ║
+║                            ║
+╚════════════════════════════╝
+</pre>
+
+
+
+<div id="intro"></div>
+
+
+
+<form action="/seleccionar" method="get" id="boton" style="display:none;">
+
+<button>
+⚔️ Comenzar aventura
+</button>
+
+</form>
+
+
+
+<script>
+
+let texto = [
+
+"🌙 Una nueva aventura comienza...",
+
+
+"En un mundo olvidado por los dioses (Ek), criaturas peligrosas acechan en cada rincón.",
+
+
+"👹 Goblins, 🐍 bestias y 🐉 dragones esperan a aquellas niñas valientes que se atrevan a enfrentarse a ellos.",
+
+
+"Tu objetivo es simple:<br><br>\
+⚔️ Sobrevive<br>\
+💰 Consigue riquezas<br>\
+⭐ Aumenta tu poder<br>\
+🏆 Salva a tu príncipe",
+
+
+"<pre>╔══════════════════════╗\n║     COMIENZA TU      ║\n║      AVENTURA        ║\n╚══════════════════════╝</pre>"
+
+];
+
+
+let i = 0;
+
+
+function mostrar(){
+
+
+    if(i < texto.length){
+
+
+        let div = document.createElement("div");
+
+        div.innerHTML = texto[i];
+
+
+        document.getElementById("intro").appendChild(div);
+
+
+        i++;
+
+
+        setTimeout(mostrar,700);
+
+
+    }
+
+
+    else{
+
+
+        document.getElementById("boton").style.display="block";
+
+
+    }
+
+
+}
+
+
+
+mostrar();
+
+
+</script>
+
+
+</body>
+
+</html>

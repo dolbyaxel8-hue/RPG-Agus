@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
 
 <title>RPG Agus</title>
 
 </head>
+
 
 
 <body>
@@ -14,12 +16,26 @@
 <h1>⚔️ RPG Agus ⚔️</h1>
 
 
-<h2>{{ jugador.nombre }}</h2>
+
+<hr>
+
+
+
+<h2>
+🧙 {{ jugador.nombre }}
+</h2>
+
+
+<p>
+⭐ Nivel: {{ jugador.nivel }}
+</p>
 
 
 <p>
 ❤️ Vida:
-{{ jugador.vida }}/{{ jugador.vida_maxima }}
+{{ jugador.vida }}
+/
+{{ jugador.vida_maxima }}
 </p>
 
 
@@ -30,40 +46,57 @@
 
 
 <p>
-🧪 Pociones:
-{{ jugador.pociones }}
-</p>
-
-
-<p>
 💰 Oro:
 {{ jugador.oro }}
 </p>
 
 
+<p>
+✨ Experiencia:
+{{ jugador.experiencia }}
+</p>
+
+
+<p>
+🧪 Pociones:
+{{ jugador.pociones }}
+</p>
+
+
+
 <hr>
 
 
-<h2>🐺 Enemigo</h2>
+
+{% if enemigo %}
 
 
-<h3>
+<h2>
+👹 Enemigo
+</h2>
+
+<p>
 {{ enemigo.nombre }}
-</h3>
-
+</p>
 
 <p>
 ❤️ Vida:
 {{ enemigo.vida }}
 </p>
 
+{% if jugador.lupa %}
 
-<hr>
+<p>
+⚔️ Daño:
+{{ enemigo.daño }}
+</p>
 
+<p>
+💰 Oro:
+{{ enemigo.oro }}
+</p>
 
-<h3>
-{{ mensaje }}
-</h3>
+{% endif %}
 
 
 
@@ -87,16 +120,88 @@
 
 
 
-<form action="/nuevo" method="post">
+{% else %}
+
+
+<h2>
+🏰 Mazmorra
+</h2>
+
+<p>
+📍 Piso actual: {{ jugador.piso }}
+</p>
+
+
+<form action="/avanzar" method="post">
 
 <button>
-🐺 Buscar enemigo
+🚪 explorar mazmorra
 </button>
 
 </form>
 
 
+{% endif %}
+
+
+
+<hr>
+
+
+
+<h3>
+📜 Registro:
+</h3>
+
+<div id="registro"
+     style="
+     height:220px;
+     overflow-y:auto;
+     border:1px solid black;
+     padding:10px;
+     background:white;">
+</div>
+
+
+<script>
+
+let mensajes = [];
+
+{% for linea in registro %}
+mensajes.push({{ linea | tojson }});
+{% endfor %}
+
+let caja = document.getElementById("registro");
+
+caja.innerHTML = "";
+
+let i = 0;
+
+function mostrarMensaje(){
+
+    if(i >= mensajes.length){
+        return;
+    }
+
+    let p = document.createElement("p");
+
+    p.innerHTML = mensajes[i];
+
+    caja.appendChild(p);
+
+    caja.scrollTop = caja.scrollHeight;
+
+    i++;
+
+    setTimeout(mostrarMensaje,1000);
+
+}
+
+mostrarMensaje();
+
+</script>
 
 </body>
+
 
 </html>

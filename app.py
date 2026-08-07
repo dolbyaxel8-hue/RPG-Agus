@@ -1,159 +1,558 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 import random
+import copy
 
 from jugador import Jugador
 from enemigos import (
-    Lobo,
     Goblin,
     Serpiente,
-    Esqueleto
+    Dragon,
+    Esqueleto,
+    Lobo,
+    Araña,
+    Escorpion,
+    Mantis,
+    Fantasma,
+    OUROBOROS
 )
+
 from personaje import efectos
+from objetos import espada_madera1, espada_hierro1, espada_diamante1,lupa1,armadura_bronce1,armadura_hierro1,armadura_diamante1,escama_ouroboros1,items
+
+from tienda import (vendedora_ambulante1,tienda_normal1,tienda_epica1,tiendas1,
+    tiendas2,
+    tiendas3,
+    tiendas4,
+    tiendas5,
+    tiendas_O
+)
 
 
 app = Flask(__name__)
 
 
-# EFECTOS DEL JUGADOR
+# ==========================
+# CREAR CLASES
+# ==========================
 
 efectos_jugador = efectos(0,0,0,0,0)
 
 
+clases = {
 
-# CREAR JUGADOR
-
-jugador = Jugador(
-    "Semidios Axel",
-    100,
-    100,
-    20,
-    1,
-    3,
-    0,
-    0,
-    0,
-    [],
-    1,
-    0,
-    0,
-    0,
-    efectos_jugador
-)
-
+    "exploradora": Jugador(
+        "Exploradora",
+        1,
+        120,
+        15,
+        1,
+        2,
+        0,
+        0,
+        0,
+        [],
+        1,
+        0,
+        0,
+        0,
+        efectos_jugador
+    ),
 
 
-# CREAR ENEMIGOS
+    "guerrera": Jugador(
+        "Guerrera",
+        90,
+        90,
+        20,
+        1,
+        1,
+        0,
+        0,
+        0,
+        [],
+        1,
+        0,
+        0,
+        0,
+        efectos_jugador
+    ),
 
+
+    "semidiosa": Jugador(
+        "Semidiosa",
+        120,
+        120,
+        20,
+        1,
+        2,
+        0,
+        0,
+        0,
+        [],
+        1,
+        0,
+        0,
+        0,
+        efectos_jugador
+    )
+
+}
+
+
+jugador = None
+enemigo = None
+tienda_actual = None
+
+mensaje = ""
+historial = []
+
+piso = 1
+
+combates = 0
+combates_piso = 0
+
+
+# ==========================
+# CREAR ENEMIGO
+# ==========================
+
+def sumar_combate():
+    global piso
+
+    global combates
+    global combates_piso
+
+    combates += 1
+    combates_piso += 1
+
+    comprobar_piso()
 def crear_enemigo():
 
-    enemigos = [
+    if piso == 1:
 
-        Lobo(
-            "Lobo",
-            60,
-            10,
-            20,
-            30
-        ),
+        enemigos = [
 
-        Goblin(
-            "Goblin",
-            50,
-            8,
-            15,
-            20
-        ),
+            Lobo("Lobo",35,12,10,28),
+            Goblin("Goblin",21,8,10,10),
+            Serpiente("Serpiente",28,10,10,18)
 
-        Serpiente(
-            "Serpiente",
-            40,
-            12,
-            25,
-            35
-        ),
-
-        Esqueleto(
-            "Esqueleto",
-            80,
-            15,
-            30,
-            50
-        )
-
-    ]
-
-    return random.choice(enemigos)
+        ]
 
 
+    elif piso == 2:
 
-# ENEMIGO INICIAL
+        enemigos = [
 
-enemigo = crear_enemigo()
+            Lobo("Lobo",45,15,15,35),
+            Araña("Araña",42,14,20,40),
+            Esqueleto("Esqueleto",50,16,20,55)
+
+        ]
 
 
-mensaje = f"🐺 Aparece un {enemigo.nombre}"
+    elif piso == 3:
 
+        enemigos = [
+
+            Araña("Araña",60,18,30,70),
+            Escorpion("Escorpión",58,24,30,75),
+            Esqueleto("Esqueleto",70,20,40,90)
+
+        ]
+
+
+    elif piso == 4:
+
+        enemigos = [
+
+            Mantis("Mantis",80,28,50,120),
+            Dragon("Dragón",100,35,60,180)
+
+        ]
+
+
+    elif piso == 5:
+
+        enemigos = [
+
+            Dragon("Dragón",130,40,100,250),
+            Fantasma("Fantasma",80,25,50,100)
+
+        ]
+
+
+    else:
+
+        enemigos = []
+
+
+    return copy.copy(random.choice(enemigos))
+
+
+
+# ==========================
+# PISOS
+# ==========================
+
+
+def comprobar_piso():
+
+    global piso
+    global mensaje
+    global combates_piso
+
+    if combates_piso >= 5 and piso == 1:
+        jugador.registro.clear()
+
+        piso = 2
+        jugador.piso = 2
+        combates_piso = 0
+        mensaje = """
+        ⭐ NUEVO PISO ⭐<br>
+        🏰 PISO II<br>
+        LAS GALERÍAS OLVIDADAS
+        """
+
+
+    elif combates_piso >= 5 and piso == 2:
+        jugador.registro.clear()
+
+        piso = 3
+        jugador.piso = 3
+        combates_piso = 0
+        mensaje = """
+        ⭐ NUEVO PISO ⭐<br>
+        🏰 PISO III<br>
+        LAS CATACUMBAS MALDITAS
+        """
+
+
+    elif combates_piso >= 5 and piso == 3:
+        jugador.registro.clear()
+
+        piso = 4
+        jugador.piso = 4
+        combates_piso = 0
+        mensaje = """
+        ⭐ NUEVO PISO ⭐<br>
+        🏰 PISO IV<br>
+        LOS SALONES DEL ABISMO
+        """
+
+
+    elif combates_piso >= 5 and piso == 4:
+        jugador.registro.clear()
+
+        piso = 5
+        jugador.piso = 5
+        combates_piso = 0
+        mensaje = """
+        ⭐ NUEVO PISO ⭐<br>
+        🐉 EL TRONO DEL DRAGÓN
+        """
+
+
+    elif combates_piso >= 5 and piso == 5:
+        jugador.registro.clear()
+
+        piso = 6
+        jugador.piso = 6
+        combates_piso = 0
+        mensaje = """
+        🐍 PISO FINAL<br>
+        ⚔️ EL OUROBOROS TE ESPERA
+        """
+
+
+
+# ==========================
+# INICIO
+# ==========================
 
 
 @app.route("/")
 def inicio():
 
     return render_template(
-        "juego.html",
-        jugador=jugador,
-        enemigo=enemigo,
-        mensaje=mensaje
+        "inicio.html"
     )
 
 
+@app.route("/seleccionar")
+def seleccionar():
 
-@app.route("/atacar", methods=["POST"])
-def atacar():
+    return render_template("seleccionar.html")
+@app.route("/elegir", methods=["POST"])
+def elegir():
 
+    global jugador
     global mensaje
-    global historial
+
+    clase = request.form["clase"]
+
+    jugador = copy.deepcopy(clases[clase])
+    for objeto in items.values():
+     objeto.comprado = 0
+
+    mensaje = "🌙 Una nueva aventura comienza..."
+
+    return redirect(
+        url_for("mazmorra")
+    )
 
 
-    if enemigo.vida > 0:
+# ==========================
+# MAZMORRA
+# ==========================
+@app.route("/comenzar")
+def comenzar():
 
-        vida_antes = enemigo.vida
+    return redirect(
+        url_for("mazmorra")
+    )
+@app.route("/intro")
+def intro():
+    import os
+    print(os.getcwd())
 
-        jugador.atacar(enemigo)
+    return render_template("intro.html")
+@app.route("/elegir_personaje")
+def elegir_personaje():
 
+    return render_template("inicio.html")
+@app.route("/elegir_clase", methods=["POST"])
+def elegir_clase():
 
-        daño = vida_antes - enemigo.vida
+    global jugador
+    global mensaje
 
+    clase = request.form["clase"]
 
-        historial.append(
-            f"⚔️ {jugador.nombre} hace {daño} de daño a {enemigo.nombre}"
-        )
+    jugador = copy.deepcopy(
+        clases[clase]
+    )
 
+    mensaje = "🌙 Una nueva aventura comienza..."
 
-        if enemigo.vida <= 0:
+    return redirect(
+        url_for("mazmorra")
+    )
+@app.route("/mazmorra")
+def mazmorra():
 
-            enemigo.vida = 0
+    return render_template(
+        "juego.html",
+        jugador=jugador,
+        enemigo=None,
+        mensaje=mensaje,
+        registro=list(jugador.registro)
+    )
+@app.route("/tienda")
+def tienda():
 
-            historial.append(
-                f"🏆 Has derrotado al {enemigo.nombre}"
-            )
+    global tienda_actual
 
+    if tienda_actual is None:
+        return redirect(url_for("mazmorra"))
+
+    return render_template(
+        "tienda.html",
+        jugador=jugador,
+        tienda=tienda_actual,
+        items=items
+    )
+@app.route("/comprar/<nombre>")
+def comprar(nombre):
+
+    global tienda_actual
+
+    # ==========================
+    # POCIONES
+    # ==========================
+
+    if nombre == "pociones":
+
+        if jugador.oro >= 30:
+
+            jugador.oro -= 30
+            jugador.pociones += 1
+
+            jugador.registro.clear()
+            jugador.registro.append("🧪 Has comprado una poción")
 
         else:
 
-            daño_recibido = 10
+            jugador.registro.clear()
+            jugador.registro.append("❌ No tienes suficiente oro")
 
-            historial.append(
-                f"🐺 {enemigo.nombre} contraataca"
-            )
+        return redirect(url_for("tienda"))
+
+    # ==========================
+    # RESTO DE OBJETOS
+    # ==========================
+
+    objeto = items[nombre]
+
+    if objeto.comprado == 1:
+
+        jugador.registro.clear()
+        jugador.registro.append("❌ Ya has comprado este objeto")
+
+        return redirect(url_for("tienda"))
+
+    if jugador.oro < objeto.precio:
+
+        jugador.registro.clear()
+        jugador.registro.append("❌ No tienes suficiente oro")
+
+        return redirect(url_for("tienda"))
+
+    jugador.oro -= objeto.precio
+
+    objeto.usar(jugador)
+
+    objeto.comprado = 1
+
+    jugador.registro.clear()
+    jugador.registro.append(f"🛒 Has comprado {objeto.nombre}")
+
+    return redirect(url_for("tienda"))
+@app.route("/salir_tienda")
+def salir_tienda():
+
+    global tienda_actual
+
+    tienda_actual = None
+
+    jugador.registro.clear()
+
+    jugador.registro.append(
+        "🚪 Has salido de la tienda"
+    )
+
+    return redirect(url_for("mazmorra"))
+@app.route("/avanzar", methods=["POST"])
+def avanzar():
+
+    global enemigo
+    global mensaje
+    global combates
+    global combates_piso
+    global tienda_actual
+    jugador.registro.clear()
+    sumar_combate()
+
+    if "NUEVO" in mensaje:
+
+     jugador.registro.append(mensaje)
+
+     mensaje = ""
+
+     return redirect(
+        url_for("mazmorra"))
+
+    
+
+    # ======================
+    # EVENTOS ALEATORIOS
+    # ======================
+
+    evento = random.randint(1,10)
 
 
-        mensaje = "⚔️ Combate realizado"
+    if evento == 10:
 
+     oro = random.randint(10,60)
+
+     jugador.oro += oro
+     jugador.registro.clear()
+
+     jugador.registro.append(
+        "🧰 Has encontrado un cofre"
+     )
+
+     jugador.registro.append(
+        f"💰 Has conseguido {oro} de oro"
+     )
+
+     return redirect(
+        url_for("mazmorra")
+     )
+    # ======================
+    # TIENDA
+    # ======================
+
+    if random.randint(1, 5) == 5:
+
+     if piso == 1:
+        datos = tiendas1
+     elif piso == 2:
+        datos = tiendas2
+     elif piso == 3:
+        datos = tiendas3
+     elif piso == 4:
+        datos = tiendas4
+     else:
+        datos = tiendas5
+
+     nombre = random.choices(
+        datos["tiendas"],
+        weights=datos["probabilidades"]
+     )[0]
+
+     tienda_actual = tiendas_O[nombre]
+     return redirect(url_for("tienda"))
+
+
+
+    # ======================
+    # ENEMIGO
+    # ======================
+
+    if piso == 6:
+
+        enemigo = OUROBOROS(
+            "Ouroboros",
+            200,
+            50,
+            300,
+            300
+        )
 
     else:
 
-        mensaje = "🏆 El enemigo ya está derrotado"
+        enemigo = crear_enemigo()
 
+    jugador.registro.append(
+    f"⚔️ Aparece {enemigo.nombre}")
+
+
+
+    mensaje = (
+        f"⚔️ Aparece {enemigo.nombre}"
+    )
+
+
+    return redirect(
+        url_for("combate")
+    )
+@app.route("/combate")
+def combate():
+
+    global enemigo
+    global mensaje
+    if jugador.vida <= 0:
+
+     return redirect(url_for("game_over"))
+
+    if enemigo and enemigo.vida <= 0:
+
+        enemigo = None
+
+        mensaje = (
+            "🏆 Victoria<br>"
+            "🚪 Puedes continuar explorando"
+        )
 
 
     return render_template(
@@ -161,69 +560,139 @@ def atacar():
         jugador=jugador,
         enemigo=enemigo,
         mensaje=mensaje,
-        historial=historial
+        registro=list(jugador.registro)
     )
 
 
+@app.route("/atacar", methods=["POST"])
+def atacar():
+
+    global mensaje
+    global enemigo
+
+    jugador.registro.clear()
+
+    jugador.atacar(enemigo)
+    if jugador.vida <= 0:
+
+     jugador.vida = 0
+
+     jugador.registro.append(
+        "☠️ Has muerto..."
+    )
+
+     return redirect(
+        url_for("game_over")
+    )
+
+
+    if enemigo.vida <= 0:
+            if enemigo.nombre == "Ouroboros":
+                return redirect(url_for("final"))
+
+            enemigo = None
+
+
+    jugador.registro.append(
+        f"❤️ Tu vida: {jugador.vida}/{jugador.vida_maxima}"
+    )
+
+
+    mensaje = ""
+
+
+    return redirect(
+        url_for("combate")
+    )
+@app.route("/game_over")
+def game_over():
+
+    return render_template(
+        "game_over.html",
+        jugador=jugador
+    )
 @app.route("/curar", methods=["POST"])
 def curar():
 
     global mensaje
 
+    jugador.registro.clear()
 
     if jugador.pociones > 0:
 
         jugador.pociones -= 1
 
+        vida_anterior = jugador.vida
+
         jugador.vida += 20
 
-
         if jugador.vida > jugador.vida_maxima:
-
             jugador.vida = jugador.vida_maxima
 
 
-        mensaje = "🧪 Te has curado 20 de vida"
+        curado = jugador.vida - vida_anterior
+
+
+        jugador.registro.append(
+            f"🧪 Te has curado {curado} de vida"
+        )
+
+        jugador.registro.append(
+            f"❤️ Tu vida: {jugador.vida}/{jugador.vida_maxima}"
+        )
 
 
     else:
 
-        mensaje = "❌ No tienes pociones"
+        jugador.registro.append(
+            "❌ No tienes pociones"
+        )
 
 
+    mensaje = ""
 
-    return render_template(
-        "juego.html",
-        jugador=jugador,
-        enemigo=enemigo,
-        mensaje=mensaje
+    return redirect(
+        url_for("combate")
     )
+@app.route("/final")
+def final():
+
+    return render_template("final.html")
+@app.route("/debug")
+def debug():
+
+    global jugador
+
+    jugador = copy.deepcopy(clases["semidiosa"])
+
+    jugador.piso = 6
+    jugador.daño = 35
+    jugador.vida = 999
+    jugador.vida_maxima = 999
+
+    return redirect(url_for("test_ouroboros"))
 
 
-
-@app.route("/nuevo", methods=["POST"])
-def nuevo():
+@app.route("/test_ouroboros")
+def test_ouroboros():
 
     global enemigo
-    global mensaje
 
-
-    enemigo = crear_enemigo()
-
-
-    mensaje = f"🐺 Aparece un {enemigo.nombre}"
-    historial = []
-
-
-    return render_template(
-        "juego.html",
-        jugador=jugador,
-        enemigo=enemigo,
-        mensaje=mensaje
+    enemigo = OUROBOROS(
+        "Ouroboros",
+        200,
+        50,
+        300,
+        300
     )
+
+    return redirect(url_for("combate"))
 
 
 
 if __name__ == "__main__":
 
-    app.run()
+    app.run(
+        host="0.0.0.0",
+        port=5000
+    )

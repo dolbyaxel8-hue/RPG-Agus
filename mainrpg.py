@@ -5,7 +5,7 @@ import json
 from personaje import Personajes, efectos
 from jugador import Jugador
 from enemigos import Goblin, Serpiente, Dragon, Esqueleto, Lobo, Araña, Escorpion, Mantis, Fantasma, OUROBOROS
-from tienda import vendedora_ambulante, tienda_normal, tienda_epica
+from tienda import vendedora_ambulante, tienda_normal, tienda_epica, tiendas1, tiendas2, tiendas3, tiendas4, tiendas5,tiendas_O
 combates = 0
 combates_P = 0
 def pisos():
@@ -83,7 +83,7 @@ Guerrera = Jugador("guerrera",90,90,20,1,1,0,0,0,[],1,0,0,0,efectos1)
 semidiosa = Jugador("semidiosa",120,120,20,1,2,0,0,0,[],1,0,0,0,efectos1)
 Dev = Jugador("dev",1,1,2,1,3,100,100,0,[],1,0,0,0,efectos1)
 jugadores = {"exploradora": Exploradora, "guerrera": Guerrera, "dev": Dev, "semidiosa": semidiosa}
-Goblin1 = Goblin("Goblin",20,8,5,10)
+Goblin1 = Goblin("Goblin",21,8,5,10)
 Serpiente1 = Serpiente("serpiente",28,10,5,18)
 Dragon1 = Dragon("Dragon",100,35,40,180)
 Esqueleto1 = Esqueleto("esqueleto",50,16,20,55)
@@ -99,15 +99,6 @@ enemigos3 = {"enemigos": [Serpiente1, Lobo1, Araña1, Esqueleto1, Escorpion1], "
 enemigos4 = {"enemigos": [Lobo1, Araña1, Esqueleto1, Escorpion1, Mantis1, Dragon1], "probabilidades": [15,20,20,25,13,2]}
 enemigos5 = {"enemigos": [Esqueleto1, Escorpion1, Mantis1, Dragon1,  Fantasma1], "probabilidades": [25,25,25,20,5]}
 enemigos6 = {"enemigos": [OUROBOROS1], "probabilidades": [100]}
-vendedora_ambulante1 = vendedora_ambulante("vendedora_ambulante", ["espada de madera, 15 de oro", "armadura de bronce, 15 de oro", "pociones, 30 de oro"])
-tienda_normal1 = tienda_normal("tienda_normal", ["espada de hierro, 25 de oro", "armadura de hierro, 25 de oro", "pociones, 30 de oro"])
-tienda_epica1 = tienda_epica("tienda_epica", ["espada de diamante, 40 de oro", "armadura de diamante, 40 de oro", "lupa, 30 de oro","escama de ouroboros, 150 de oro" "pociones, 30 de oro"])
-tiendas1 = {"tiendas": ["vendedor_ambulante","tienda_normal","tienda_epica"], "probabilidades":[10,4,0]}
-tiendas2 = {"tiendas": ["vendedor_ambulante","tienda_normal","tienda_epica"], "probabilidades":[7,6,1]}
-tiendas3 = {"tiendas": ["vendedor_ambulante","tienda_normal","tienda_epica"], "probabilidades":[2,6,3]}
-tiendas4 = {"tiendas": ["vendedor_ambulante","tienda_normal","tienda_epica"], "probabilidades":[1,6,3]}
-tiendas5 = {"tiendas": ["vendedor_ambulante","tienda_normal","tienda_epica"], "probabilidades":[0,5,4]}
-tiendas_O = {"vendedor_ambulante": vendedora_ambulante1, "tienda_normal": tienda_normal1, "tienda_epica": tienda_epica1}
 introduccion()
 player = input("¿que clase deseas ser, exploradora, guerrera o semidiosa?")
 print("entras en la mazmorra")
