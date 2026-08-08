@@ -303,7 +303,7 @@ class Jugador(Personajes):
 
         self.vida_maxima += 5
 
-        self.vida += 20
+        self.vida += 30
 
         if self.vida > self.vida_maxima:
             self.vida = self.vida_maxima

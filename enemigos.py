@@ -60,7 +60,7 @@ class Lobo(Personajes):
     def __init__(self,nombre,vida,daño,oro,experiencia):
         super(). __init__(nombre,vida,daño,oro,experiencia)
     def ataque_esp(self,jugador):
-        if random.randint(1,2) == 2:
+        if random.randint(1,2) == 4:
             jugador.registro.append(
     "🐺 El lobo te ataca otra vez"
 )
@@ -81,7 +81,7 @@ class Araña(Personajes):
     def __init__(self,nombre,vida,daño,oro,experiencia):
         super(). __init__(nombre,vida,daño,oro,experiencia)
     def ataque_esp(self,jugador):
-        if random.randint(1,4) == 4:
+        if random.randint(1,4) == 5:
             jugador.registro.append(
     "🕷️ La araña te atrapa en su telaraña"
 )
@@ -97,7 +97,7 @@ class Escorpion(Personajes):
     def __init__(self,nombre,vida,daño,oro,experiencia):
         super(). __init__(nombre,vida,daño,oro,experiencia)
     def ataque_esp(self,jugador):
-        if random.randint(1,4) == 4:
+        if random.randint(1,4) == 5:
             jugador.registro.append(
                 " El escorpión te ha envenenado"
             )

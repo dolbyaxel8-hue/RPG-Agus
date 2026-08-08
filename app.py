@@ -132,9 +132,9 @@ def crear_enemigo():
 
         enemigos = [
 
-            Lobo("Lobo",35,12,10,28),
+            Lobo("Lobo",35,12,20,28),
             Goblin("Goblin",25,8,10,10),
-            Serpiente("Serpiente",28,10,10,18)
+            Serpiente("Serpiente",28,10,15,18)
 
         ]
 
@@ -143,7 +143,7 @@ def crear_enemigo():
 
         enemigos = [
 
-            Lobo("Lobo",42,15,15,35),
+            Lobo("Lobo",42,15,20,35),
             Araña("Araña",42,12,20,40),
             Esqueleto("Esqueleto",50,16,20,55)
 
@@ -154,8 +154,8 @@ def crear_enemigo():
 
         enemigos = [
 
-            Araña("Araña",42,18,30,70),
-            Escorpion("Escorpión",58,24,30,75),
+            Araña("Araña",42,18,40,70),
+            Escorpion("Escorpión",40,24,30,75),
             Esqueleto("Esqueleto",60,18,40,90)
 
         ]
@@ -166,6 +166,7 @@ def crear_enemigo():
         enemigos = [
 
             Mantis("Mantis",43,23,50,120),
+            Escorpion("Escorpión",40,24,30,75),
             Dragon("Dragón",58,25,60,180)
 
         ]
@@ -176,6 +177,8 @@ def crear_enemigo():
         enemigos = [
 
             Dragon("Dragón",63,25,100,250),
+            Mantis("Mantis",43,23,50,120),
+            Escorpion("Escorpión",40,24,50,75),
             Fantasma("Fantasma",32,25,50,100)
 
         ]
