@@ -110,7 +110,7 @@ piso = 1
 
 combates = 0
 combates_piso = 0
-
+exploraciones_sin_tienda = 0
 
 # ==========================
 # CREAR ENEMIGO
@@ -439,7 +439,9 @@ def avanzar():
     global combates
     global combates_piso
     global tienda_actual
+    global exploraciones_sin_tienda
     jugador.registro.clear()
+    exploraciones_sin_tienda += 1
     sumar_combate()
 
     if "NUEVO" in mensaje:
@@ -482,7 +484,7 @@ def avanzar():
     # TIENDA
     # ======================
 
-    if random.randint(1, 5) == 5:
+    if exploraciones_sin_tienda >= 4 or random.randint(1, 5) == 5:
 
      if piso == 1:
         datos = tiendas1
@@ -499,7 +501,7 @@ def avanzar():
         datos["tiendas"],
         weights=datos["probabilidades"]
      )[0]
-
+     exploraciones_sin_tienda = 0
      tienda_actual = tiendas_O[nombre]
      return redirect(url_for("tienda"))
 
