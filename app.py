@@ -145,7 +145,7 @@ def crear_enemigo():
 
             Lobo("Lobo",42,15,20,35),
             Araña("Araña",42,12,20,40),
-            Esqueleto("Esqueleto",50,16,20,55)
+            Serpiente("Serpiente",28,10,15,18)
 
         ]
 
