@@ -42,7 +42,7 @@ clases = {
 
     "exploradora": Jugador(
         "Exploradora",
-        1,
+        120,
         120,
         15,
         1,
@@ -133,7 +133,7 @@ def crear_enemigo():
         enemigos = [
 
             Lobo("Lobo",35,12,10,28),
-            Goblin("Goblin",21,8,10,10),
+            Goblin("Goblin",25,8,10,10),
             Serpiente("Serpiente",28,10,10,18)
 
         ]
@@ -143,8 +143,8 @@ def crear_enemigo():
 
         enemigos = [
 
-            Lobo("Lobo",45,15,15,35),
-            Araña("Araña",42,14,20,40),
+            Lobo("Lobo",42,15,15,35),
+            Araña("Araña",42,12,20,40),
             Esqueleto("Esqueleto",50,16,20,55)
 
         ]
@@ -154,9 +154,9 @@ def crear_enemigo():
 
         enemigos = [
 
-            Araña("Araña",60,18,30,70),
+            Araña("Araña",42,18,30,70),
             Escorpion("Escorpión",58,24,30,75),
-            Esqueleto("Esqueleto",70,20,40,90)
+            Esqueleto("Esqueleto",60,18,40,90)
 
         ]
 
@@ -165,8 +165,8 @@ def crear_enemigo():
 
         enemigos = [
 
-            Mantis("Mantis",80,28,50,120),
-            Dragon("Dragón",100,35,60,180)
+            Mantis("Mantis",43,23,50,120),
+            Dragon("Dragón",58,25,60,180)
 
         ]
 
@@ -175,8 +175,8 @@ def crear_enemigo():
 
         enemigos = [
 
-            Dragon("Dragón",130,40,100,250),
-            Fantasma("Fantasma",80,25,50,100)
+            Dragon("Dragón",63,25,100,250),
+            Fantasma("Fantasma",32,25,50,100)
 
         ]
 
@@ -680,8 +680,8 @@ def test_ouroboros():
 
     enemigo = OUROBOROS(
         "Ouroboros",
-        200,
-        50,
+        120,
+        30,
         300,
         300
     )
