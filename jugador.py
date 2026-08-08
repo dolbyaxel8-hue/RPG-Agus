@@ -33,7 +33,7 @@ class Jugador(Personajes):
         pass
     def hacer_daño(self,enemigo,cantidad):
 
-     enemigo.vida -= cantidad
+     enemigo.vida = max(0, int(round(enemigo.vida - cantidad)))
 
      if cantidad <= 0:
 
@@ -194,7 +194,7 @@ class Jugador(Personajes):
              self.registro.append(
             f"💥 {enemigo.nombre} ha hecho un golpe crítico")
 
-            enemigo.recibir_daño(self, round(daño_recibido(d, e, f, g), 1))
+            enemigo.recibir_daño(self, int(round(daño_recibido(d, e, f, g), 1)))
 
             if d > 0:
 
@@ -289,8 +289,8 @@ class Jugador(Personajes):
         5: 400,
         6: 480,
         7: 600,
-        8: 700,
-        9: 800,
+        8: 730,
+        9: 840,
         10: 950
     }
 
@@ -303,7 +303,7 @@ class Jugador(Personajes):
 
         self.vida_maxima += 5
 
-        self.vida += 30
+        self.vida += 20
 
         if self.vida > self.vida_maxima:
             self.vida = self.vida_maxima

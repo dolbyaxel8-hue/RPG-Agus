@@ -80,4 +80,4 @@ armadura_hierro1 = armadura_hierro("armadura de hierro",25,0.2,0)
 armadura_diamante1 = armadura_diamante("armadura de diamanate",40,0.3,0)
 escama_ouroboros1 = escama_ouroboros("escama de ouroboros",150,50,0)
 lupa1 = lupa("lupa",30,0,0)
-items = {"espada de madera": espada_madera1, "espada de hierro": espada_hierro1, "espada de diamante": espada_diamante1, "armadura de bronce": armadura_bronce1, "armadura de hierro": armadura_hierro1, "armadura de diamante": armadura_diamante1, "escama de ouroboros": escama_ouroboros1}
+items = {"espada de madera": espada_madera1, "espada de hierro": espada_hierro1, "espada de diamante": espada_diamante1, "armadura de bronce": armadura_bronce1, "armadura de hierro": armadura_hierro1, "armadura de diamante": armadura_diamante1, "escama de ouroboros": escama_ouroboros1, "lupa": lupa1}
